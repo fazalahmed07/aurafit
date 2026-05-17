@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}| Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="fw-bold mb-4">👤 My Dashboard</h2>
+<h5 class="text-muted mb-4">Welcome, {{ user.username }}!</h5>
+
+{% if orders %}
+<h4 class="fw-bold mb-3">Order History</h4>
+<div class="table-responsive">
+    <table class="table align-middle shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Order #</th>
+                <th>Date</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>#{{ order.id }}</td>
+                <td>{{ order.created_at|date:"d M Y" }}</td>
+                <td>
+                    {% for item in order.items.all %}
+                        {{ item.product.name }} x {{ item.quantity }}<br>
+                    {% endfor %}
+                </td>
+                <td>₹{{ order.total }}</td>
+                <td>
+                    {% if order.paid %}
+                        <span class="badge bg-success">Paid</span>
+                    {% else %}
+                        <span class="badge bg-danger">Unpaid</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="text-center mt-5">
+    <h5 class="text-muted">No orders yet!</h5>
+    <a href="/" class="btn btn-dark mt-3">Start Shopping</a>
+</div>
+{% endif %}
+{% endblock %}

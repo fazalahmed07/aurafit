@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}| Checkout{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-7">
+        <h3 class="fw-bold mb-4">Checkout</h3>
+        <div class="card shadow-sm p-4">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Delivery Address</label>
+                    <textarea name="address" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-dark w-100">Place Order ✅</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <h3 class="fw-bold mb-4">Order Summary</h3>
+        <div class="card shadow-sm p-4">
+            {% for item in cart_items %}
+            <div class="d-flex justify-content-between mb-2">
+                <span>{{ item.product.name }} x {{ item.quantity }}</span>
+                <span>₹{{ item.subtotal }}</span>
+            </div>
+            {% endfor %}
+            <hr>
+            <div class="d-flex justify-content-between fw-bold">
+                <span>Total</span>
+                <span>₹{{ total }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}| Cart{% endblock %}
+
+{% block content %}
+<h2 class="fw-bold mb-4">🛒 Your Cart</h2>
+
+{% if cart_items %}
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>
+                    {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" width="60" class="rounded me-2">
+                    {% endif %}
+                    {{ item.product.name }}
+                </td>
+                <td>₹{{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ item.subtotal }}</td>
+                <td>
+                    <a href="/cart/remove/{{ item.product.id }}/" class="btn btn-sm btn-outline-danger">Remove</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="text-end mt-3">
+    <h4 class="fw-bold">Total: ₹{{ total }}</h4>
+    <a href="/orders/checkout/" class="btn btn-dark btn-lg mt-2">Proceed to Checkout →</a>
+</div>
+
+{% else %}
+<div class="text-center mt-5">
+    <h4 class="text-muted">Your cart is empty!</h4>
+    <a href="/" class="btn btn-dark mt-3">Continue Shopping</a>
+</div>
+{% endif %}
+
+{% endblock %}
