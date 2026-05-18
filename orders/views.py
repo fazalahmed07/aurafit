@@ -20,13 +20,23 @@ def checkout(request):
         cart_items.append({'product': product, 'quantity': quantity, 'subtotal': subtotal})
 
     if request.method == 'POST':
+        full_name = request.POST.get('full_name')
         address = request.POST.get('address')
         email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        pincode = request.POST.get('pincode')
 
         order = Order.objects.create(
             user=request.user,
+            full_name=full_name,
             address=address,
             email=email,
+            phone=phone,
+            city=city,
+            state=state,
+            pincode=pincode,
             paid=True
         )
 

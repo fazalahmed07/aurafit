@@ -4,8 +4,13 @@ from products.models import Product
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    address = models.TextField()
+    full_name = models.CharField(max_length=200, default='')
     email = models.EmailField()
+    phone = models.CharField(max_length=15, default='')
+    address = models.TextField()
+    city = models.CharField(max_length=100, default='')
+    state = models.CharField(max_length=100, default='')
+    pincode = models.CharField(max_length=10, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     paid = models.BooleanField(default=False)
 
